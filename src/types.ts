@@ -16,6 +16,7 @@ export type editModalProps = {
   show: boolean;
   setShow: (value: boolean) => void;
   contactId: number;
+  reload: () => void;
 };
 
 export type FormProps = {

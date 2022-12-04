@@ -12,8 +12,9 @@ const EditModal = (props: editModalProps) => {
   const [errors, setErrors] = useState({} as FormErrors);
 
   const handleClose = () => {
+    //setContact(CreateNewUserObj()); //reset the form data
     setContact({} as Contact); //reset the form data
-    setErrors({} as FormErrors);//reset the errors
+    setErrors({} as FormErrors); //reset the errors
     setShow(false); //close modal
   };
 
@@ -24,7 +25,7 @@ const EditModal = (props: editModalProps) => {
       setErrors(errors);
       return;
     }
-    const result = contactId
+    contactId
       ? await updateContact(contact as Contact)
       : await addContact(contact as Contact);
     handleClose();
@@ -39,7 +40,7 @@ const EditModal = (props: editModalProps) => {
     if (contactId) getContactById(contactId);
   }, [contactId]);
 
-  const title = contactId ? `Edit Contact #${contactId}` : `Add New contact`;
+  const title = contactId ? `Edit Contact #${contactId}` : `Add New Contact`;
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>

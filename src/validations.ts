@@ -1,8 +1,6 @@
-/* eslint-disable no-useless-escape */ 
 import { Contact, FormErrors } from "./types";
 const validPhoneRegex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-const validEmailRegex =
-  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const validEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const validateForm = (contact: Contact) => {
   const newErrors = {} as FormErrors;
@@ -13,10 +11,7 @@ export const validateForm = (contact: Contact) => {
   }
 
   //email
-  if (contact.email) {
-    newErrors.email = [];
-    newErrors.email.push("Email is required!");
-  } else if (validateEmail(contact.email)) {
+  if (contact.email && validateEmail(contact.email)) {//email is not required
     newErrors.email = [];
     newErrors.email.push("Invalid email address!");
   }
@@ -40,7 +35,7 @@ export const validateForm = (contact: Contact) => {
   const date = Date.parse(contact.birthDate);
   if (!contact.birthDate) {
     newErrors.birthDate = [];
-    newErrors.birthDate.push("Birth date is required!");
+    newErrors.birthDate.push("Date of birth is required!");
   } else if (isNaN(date)) {
     //just in case, cause it's quite impossible using the date picker
     newErrors.birthDate = [];
@@ -54,12 +49,14 @@ export const validateForm = (contact: Contact) => {
 };
 
 const validatePhoneNumber = (phone: string) => {
+  if (!phone) return true; //phone is not required
   return new RegExp(validPhoneRegex).test(phone);
 };
 
 const validateEmail = (email: string): boolean => {
-  //same regex used in the API
-  return new RegExp(validEmailRegex).test(email);
+  if (!email) return true; //no email is allowed
+  const isValid = new RegExp(validEmailRegex).test(email);
+  return !isValid;
 };
 
 //The Luhn Algorithm, same as in the API

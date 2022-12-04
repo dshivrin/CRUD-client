@@ -1,3 +1,5 @@
+import { Contact } from "./types";
+
 //returns dd/MM/YYYY for displaying in table
 export const FormatDateString = (str: string) => {
   const date = new Date(str);
@@ -14,4 +16,18 @@ export const FormatDateStringForDatePicker = (str: string) => {
   day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()+1}`;
   return `${year}-${month}-${day}`;
 };
+
+export const CreateNewUserObj = () => {
+  const contact : Contact ={
+    id:0,
+    socialNumber:0,
+    name: "",
+    birthDate: "",
+    email: "",
+    gender: "",
+    phone: "",
+  };
+
+  return contact;
+}
 

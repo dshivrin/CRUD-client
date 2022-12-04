@@ -27,7 +27,7 @@ const List = () => {
       setData(result.data);
     };
     fetchData();
-  }, []);
+  }, [data]);
 
   const onEditClick = (contact: Contact) => {
     //todo: fetch the user here maybe? to prevent nullable values 
@@ -57,6 +57,7 @@ const List = () => {
           show={showEditModal}
           setShow={setShowEditModal}
           contactId={selectedContact.id}
+          reload={fetchData}
         />
       </div>
     );
@@ -123,6 +124,7 @@ const List = () => {
           show={showEditModal}
           setShow={setShowEditModal}
           contactId={selectedContact.id}
+          reload={fetchData}
         />
         <ConfirmModal
           show={showDeleteModal}
