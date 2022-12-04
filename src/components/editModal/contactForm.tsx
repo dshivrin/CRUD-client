@@ -1,44 +1,46 @@
 import Form from "react-bootstrap/Form";
 import { FormProps, InputChangeEvent, SelectChangeEvent } from "../../types";
-import { FormatDateString, StringToDate } from "../../utils";
+import { FormatDateStringForDatePicker } from "../../utils";
+
 
 const ContactForm = (props: FormProps) => {
   const { contact, setContact } = props;
 
   const onSocialNumberChange = (event: InputChangeEvent) => {
     setContact({
-      ...contact, 
-      socialNumber: +event.target.value
+      ...contact,
+      socialNumber: +event.target.value,
     });
   };
   const onNameChange = (event: InputChangeEvent) => {
-     setContact({
+    setContact({
       ...contact,
-      name: event.target.value
-     });
+      name: event.target.value,
+    });
   };
   const onEmailChange = (event: InputChangeEvent) => {
     setContact({
       ...contact,
-      email: event.target.value
+      email: event.target.value,
     });
   };
   const onDateOfBirthChange = (event: InputChangeEvent) => {
     setContact({
       ...contact,
-      birthDate: event.target.value
+      birthDate: event.target.value,
     });
+    return contact.birthDate;
   };
   const onGenderChange = (event: SelectChangeEvent) => {
     setContact({
       ...contact,
-      gender: event.target.value
+      gender: event.target.value,
     });
   };
   const onPhoneChange = (event: InputChangeEvent) => {
     setContact({
       ...contact,
-      phone: event.target.value
+      phone: event.target.value,
     });
   };
 
@@ -74,7 +76,9 @@ const ContactForm = (props: FormProps) => {
         <Form.Label>Date of Birth</Form.Label>
         <Form.Control
           type="date"
-          value={FormatDateString(contact.birthDate)}
+          name="BirthDate"
+          placeholder="Date of Birth"
+          value={FormatDateStringForDatePicker(contact.birthDate)}
           onChange={onDateOfBirthChange}
         />
       </Form.Group>
