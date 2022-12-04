@@ -1,28 +1,75 @@
 import config from "../../config.json";
-import axios from "axios";
+import { toast } from "react-toastify";
 import { Contact } from "../../types";
+import axios from "axios";
 
 const baseUrl = config.apiUrl;
 
 export const fetchAllContacts = async () => {
+  try {
+  } catch (err) {}
   return await axios.get(baseUrl);
 };
 
 export const fetchContact = async (contactId: number) => {
-  const url = `${baseUrl}/${contactId}`;
-  return await axios.get(url);
+  try {
+    const url = `${baseUrl}/${contactId}`;
+    const result = await axios.get(url);
+    if (result.status === 200) {
+      return result;
+    }
+  } catch (err) {
+    console.error("failed to fetch contacts");
+  }
+  return { data: [] };
 };
 
 export const addContact = async (contact: Contact) => {
-  return await axios.post(baseUrl, contact);
+  try {
+    const result = await axios.post(baseUrl, contact);
+    if (result.status === 200) {
+      toast.success("Contact Saved!", { position: toast.POSITION.BOTTOM_LEFT });
+    }
+    return result;
+  } catch (err) {
+    console.error(err);
+    toast.error(`Failed to add contact '${contact.name}'`, {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
+  }
 };
 
 export const updateContact = async (contact: Contact) => {
+  try {
     const url = `${baseUrl}/${contact.id}`;
-    return await axios.put(url, contact);
-}
+    const result = await axios.put(url, contact);
+    if (result.status === 200) {
+      toast.success("Contact updated", {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error(`Failed to update contact ${contact.name}`, {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
+  }
+};
 
 export const deleteContact = async (contactId: number) => {
+  try {
     const url = `${baseUrl}/${contactId}`;
-    return await axios.delete(url);
-}
+    const result = await axios.delete(url);
+    if (result.status === 200) {
+      toast.success("Contact deleted", {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
+      return result;
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error(`Failed to delete contact ${contactId}`, {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
+  }
+};
