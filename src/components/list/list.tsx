@@ -16,6 +16,11 @@ const List = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedContact, setSelectedContact] = useState({} as Contact);
 
+  const fetchData = async () => {
+    const result = await fetchAllContacts();
+    setData(result.data);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetchAllContacts();
@@ -59,6 +64,7 @@ const List = () => {
       <div className="table-container">
         <div className="header">
           <AddNewContactBtn action={onAddNew} text="Add New Contact" />
+          <Button onClick={fetchData}>Refresh</Button>
         </div>
         <Table striped bordered hover>
           <thead>

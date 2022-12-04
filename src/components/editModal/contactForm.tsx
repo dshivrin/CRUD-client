@@ -1,48 +1,18 @@
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { FormProps, InputChangeEvent, SelectChangeEvent } from "../../types";
 import { FormatDateStringForDatePicker } from "../../utils";
 
-
 const ContactForm = (props: FormProps) => {
   const { contact, setContact } = props;
+  const [errors, setErrors] = useState({});
 
-  const onSocialNumberChange = (event: InputChangeEvent) => {
+  const setField = (field: string, value: string | number) => {
     setContact({
       ...contact,
-      socialNumber: +event.target.value,
-    });
-  };
-  const onNameChange = (event: InputChangeEvent) => {
-    setContact({
-      ...contact,
-      name: event.target.value,
-    });
-  };
-  const onEmailChange = (event: InputChangeEvent) => {
-    setContact({
-      ...contact,
-      email: event.target.value,
-    });
-  };
-  const onDateOfBirthChange = (event: InputChangeEvent) => {
-    setContact({
-      ...contact,
-      birthDate: event.target.value,
-    });
-    return contact.birthDate;
-  };
-  const onGenderChange = (event: SelectChangeEvent) => {
-    setContact({
-      ...contact,
-      gender: event.target.value,
-    });
-  };
-  const onPhoneChange = (event: InputChangeEvent) => {
-    setContact({
-      ...contact,
-      phone: event.target.value,
-    });
-  };
+      [field]: value
+    })
+  }
 
   return (
     <Form>
@@ -52,7 +22,7 @@ const ContactForm = (props: FormProps) => {
           type="number"
           autoFocus
           value={contact.socialNumber}
-          onChange={onSocialNumberChange}
+          onChange={(event:InputChangeEvent)=> {setField("socialNumber", +event.target.value)}}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.Name">
@@ -60,7 +30,7 @@ const ContactForm = (props: FormProps) => {
         <Form.Control
           type="string"
           value={contact.name}
-          onChange={onNameChange}
+          onChange={(event:InputChangeEvent)=> {setField("name", event.target.value)}}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.Email">
@@ -69,7 +39,7 @@ const ContactForm = (props: FormProps) => {
           type="email"
           placeholder="name@example.com"
           value={contact.email}
-          onChange={onEmailChange}
+          onChange={(event:InputChangeEvent)=> {setField("email", event.target.value)}}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.BirthDate">
@@ -79,7 +49,7 @@ const ContactForm = (props: FormProps) => {
           name="BirthDate"
           placeholder="Date of Birth"
           value={FormatDateStringForDatePicker(contact.birthDate)}
-          onChange={onDateOfBirthChange}
+          onChange={(event:InputChangeEvent)=> {setField("birthDate", event.target.value)}}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.Gender">
@@ -87,7 +57,7 @@ const ContactForm = (props: FormProps) => {
         <Form.Select
           aria-label="Gender"
           value={contact.gender}
-          onChange={onGenderChange}
+          onChange={(event:SelectChangeEvent)=> {setField("gender", event.target.value)}}
         >
           <option>Choose gender</option>
           <option value="Male">Male</option>
@@ -100,7 +70,7 @@ const ContactForm = (props: FormProps) => {
         <Form.Control
           type="string"
           value={contact.phone}
-          onChange={onPhoneChange}
+          onChange={(event:InputChangeEvent)=> {setField("phone", event.target.value)}}
         />
       </Form.Group>
     </Form>
