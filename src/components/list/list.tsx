@@ -30,6 +30,7 @@ const List = () => {
   }, []);
 
   const onEditClick = (contact: Contact) => {
+    //todo: fetch the user here maybe? to prevent nullable values 
     setSelectedContact(contact);
     setShowEditModal(true);
   };

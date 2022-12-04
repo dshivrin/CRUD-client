@@ -1,21 +1,29 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Contact, editModalProps } from "../../types";
+import { Contact, editModalProps, FormErrors } from "../../types";
 import ContactForm from "./contactForm";
 import { fetchContact, addContact, updateContact } from "../shared/apiService";
+import { validateForm } from "../../validations";
 
 const EditModal = (props: editModalProps) => {
   const { show, setShow, contactId } = props;
   const [contact, setContact] = useState<Contact>({} as Contact);
+  const [errors, setErrors] = useState({} as FormErrors);
 
   const handleClose = () => {
-    setContact({} as Contact); //reset the state
+    setContact({} as Contact); //reset the form data
+    setErrors({} as FormErrors);//reset the errors
     setShow(false); //close modal
   };
 
   const onSaveClick = async (contactId: number) => {
-    //validate and save
+    //validate then save / update
+    const errors = validateForm(contact);
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
     const result = contactId
       ? await updateContact(contact as Contact)
       : await addContact(contact as Contact);
@@ -32,14 +40,18 @@ const EditModal = (props: editModalProps) => {
   }, [contactId]);
 
   const title = contactId ? `Edit Contact #${contactId}` : `Add New contact`;
-  //todo use bootstrap validation
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ContactForm contact={contact} setContact={setContact} />
+        <ContactForm
+          contact={contact}
+          setContact={setContact}
+          errors={errors}
+          setErrors={setErrors}
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

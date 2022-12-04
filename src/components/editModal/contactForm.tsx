@@ -1,18 +1,31 @@
-import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { FormProps, InputChangeEvent, SelectChangeEvent } from "../../types";
 import { FormatDateStringForDatePicker } from "../../utils";
+import {
+  FormErrors,
+  FormProps,
+  InputChangeEvent,
+  SelectChangeEvent,
+} from "../../types";
 
+//Controlled form
 const ContactForm = (props: FormProps) => {
-  const { contact, setContact } = props;
-  const [errors, setErrors] = useState({});
+  const { contact, setContact, errors, setErrors } = props;
 
+  //socialNumber is type number, the rest are strings
   const setField = (field: string, value: string | number) => {
     setContact({
       ...contact,
-      [field]: value
-    })
-  }
+      [field]: value,
+    });
+
+    //remove the errors for that field
+    if (!!errors[field as keyof FormErrors]) {
+      setErrors({
+        ...errors,
+        [field]: null,
+      });
+    }
+  };
 
   return (
     <Form>
@@ -22,16 +35,28 @@ const ContactForm = (props: FormProps) => {
           type="number"
           autoFocus
           value={contact.socialNumber}
-          onChange={(event:InputChangeEvent)=> {setField("socialNumber", +event.target.value)}}
+          isInvalid={ !!errors.socialNumber }
+          onChange={(event: InputChangeEvent) => {
+            setField("socialNumber", +event.target.value);
+          }}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.socialNumber}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.Name">
         <Form.Label>Name</Form.Label>
         <Form.Control
           type="string"
           value={contact.name}
-          onChange={(event:InputChangeEvent)=> {setField("name", event.target.value)}}
+          isInvalid={ !!errors.name }
+          onChange={(event: InputChangeEvent) => {
+            setField("name", event.target.value);
+          }}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.name}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.Email">
         <Form.Label>Email address</Form.Label>
@@ -39,39 +64,62 @@ const ContactForm = (props: FormProps) => {
           type="email"
           placeholder="name@example.com"
           value={contact.email}
-          onChange={(event:InputChangeEvent)=> {setField("email", event.target.value)}}
+          isInvalid={ !!errors.email }
+          onChange={(event: InputChangeEvent) => {
+            setField("email", event.target.value);
+          }}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.email}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.BirthDate">
         <Form.Label>Date of Birth</Form.Label>
         <Form.Control
           type="date"
           name="BirthDate"
-          placeholder="Date of Birth"
+          isInvalid={ !!errors.birthDate }
           value={FormatDateStringForDatePicker(contact.birthDate)}
-          onChange={(event:InputChangeEvent)=> {setField("birthDate", event.target.value)}}
+          onChange={(event: InputChangeEvent) => {
+            setField("birthDate", event.target.value);
+          }}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.birthDate}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.Gender">
         <Form.Label>Gender</Form.Label>
         <Form.Select
           aria-label="Gender"
           value={contact.gender}
-          onChange={(event:SelectChangeEvent)=> {setField("gender", event.target.value)}}
+          isInvalid={ !!errors.gender }
+          onChange={(event: SelectChangeEvent) => {
+            setField("gender", event.target.value);
+          }}
         >
           <option>Choose gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Other">Other</option>
         </Form.Select>
+        <Form.Control.Feedback type="invalid">
+          {errors.gender}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="form.Phone">
         <Form.Label>Phone number</Form.Label>
         <Form.Control
           type="string"
           value={contact.phone}
-          onChange={(event:InputChangeEvent)=> {setField("phone", event.target.value)}}
+          isInvalid={ !!errors.phone }
+          onChange={(event: InputChangeEvent) => {
+            setField("phone", event.target.value);
+          }}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.phone}
+        </Form.Control.Feedback>
       </Form.Group>
     </Form>
   );

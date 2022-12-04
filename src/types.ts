@@ -21,12 +21,16 @@ export type editModalProps = {
 export type FormProps = {
   contact: Contact;
   setContact: (contact: Contact) => void;
+  errors: FormErrors;
+  setErrors: (errors: FormErrors) => void;
 };
 
 export type confirmModalProps = {
   show: boolean;
   setShow: (value: boolean) => void;
-} & FormProps;
+  contact: Contact;
+  setContact: (contact: Contact) => void;
+};
 
 export type AddNewContactProps = {
   action: () => void;
@@ -36,3 +40,13 @@ export type AddNewContactProps = {
 export type ZeroStateProps = {
   action: () => void;
 }
+//the reason for using an array for each field is because it's possible to have more than one error in the input
+//while it's not the case currently, it make the code future proof
+export type FormErrors = {
+  socialNumber: string[];
+  name: string[];
+  email: string[];
+  birthDate: string[];
+  gender: string[];
+  phone: string[];
+};
