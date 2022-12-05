@@ -2,7 +2,7 @@ import { Contact, FormErrors } from "./types";
 
 //validate Israeli phone numbers mobile, stationary 1700 etc
 const validPhoneRegex =
-  /^(0(?:[23489]|5[0-689]|7[2346789])(?![01])(\d{7}))|(1(?:[7-9])00(\d{6}))|(1599(\d{6}))$/; 
+  /^\+?(972|0)(\-)?0?(([23489]{1}\d{7})|[5]{1}\d{8})$/; 
 const validEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const validateForm = (contact: Contact) => {
