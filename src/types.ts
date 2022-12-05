@@ -12,6 +12,12 @@ export type Contact = {
   phone: string;
 };
 
+export type TableProps = {
+  data: Contact[];
+  onDelete: (contact: Contact) => void;
+  onEdit: (contact: Contact) => void;
+};
+
 export type editModalProps = {
   show: boolean;
   closeModal: () => void;
@@ -36,11 +42,11 @@ export type confirmModalProps = {
 export type AddNewContactProps = {
   action: () => void;
   text: string;
-}
+};
 
 export type ZeroStateProps = {
   action: () => void;
-}
+};
 //the reason for using an array for each field is because it's possible to have more than one error in the input
 //while it's not the case currently, it make the code future proof
 export type FormErrors = {
