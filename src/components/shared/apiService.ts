@@ -41,8 +41,7 @@ export const addContact = async (contact: Contact) => {
 
 export const updateContact = async (contact: Contact) => {
   try {
-    const url = `${baseUrl}/${contact.id}`;
-    const result = await axios.put(url, contact);
+    const result = await axios.put(baseUrl, contact);
     if (result.status === 200) {
       toast.success("Contact updated", {
         position: toast.POSITION.BOTTOM_LEFT,
@@ -56,10 +55,9 @@ export const updateContact = async (contact: Contact) => {
   }
 };
 
-export const deleteContact = async (contactId: number) => {
+export const deleteContact = async (contact: Contact) => {
   try {
-    const url = `${baseUrl}/${contactId}`;
-    const result = await axios.delete(url);
+    const result = await axios.delete(baseUrl, {data: contact });
     if (result.status === 200) {
       toast.success("Contact deleted", {
         position: toast.POSITION.BOTTOM_LEFT,
@@ -68,7 +66,7 @@ export const deleteContact = async (contactId: number) => {
     }
   } catch (err) {
     console.error(err);
-    toast.error(`Failed to delete contact ${contactId}`, {
+    toast.error(`Failed to delete contact "${contact.name}"`, {
       position: toast.POSITION.BOTTOM_LEFT,
     });
   }

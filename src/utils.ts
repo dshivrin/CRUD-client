@@ -8,6 +8,7 @@ export const FormatDateString = (str: string) => {
 
 //returns dd-MM-YYYY because bootstrap date-picker is picky on its format
 export const FormatDateStringForDatePicker = (str: string) => {
+  if(!str) return;
   const date = new Date(str);
   let year, month, day;
   year = date.getFullYear();

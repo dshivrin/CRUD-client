@@ -7,7 +7,7 @@ const confirmModal = (props: confirmModalProps) => {
   const { show, setShow, contact } = props;
 
   const confirmDelete = async () => {
-    await deleteContact(contact.id);
+    await deleteContact(contact);
     setShow(false);
   };
   const cancel = () => {

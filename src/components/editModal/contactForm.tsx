@@ -11,6 +11,8 @@ import {
 const ContactForm = (props: FormProps) => {
   const { contact, setContact, errors, setErrors } = props;
 
+  const dateValue = FormatDateStringForDatePicker(contact.birthDate);
+
   //socialNumber is type number, the rest are strings
   const setField = (field: string, value: string | number) => {
     setContact({
@@ -79,7 +81,7 @@ const ContactForm = (props: FormProps) => {
           type="date"
           name="BirthDate"
           isInvalid={ !!errors.birthDate }
-          value={FormatDateStringForDatePicker(contact.birthDate)}
+          value={dateValue}
           onChange={(event: InputChangeEvent) => {
             setField("birthDate", event.target.value);
           }}

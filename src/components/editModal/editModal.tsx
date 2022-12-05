@@ -7,19 +7,18 @@ import { fetchContact, addContact, updateContact } from "../shared/apiService";
 import { validateForm } from "../../validations";
 
 const EditModal = (props: editModalProps) => {
-  const { show, setShow, contactId } = props;
+  const { show, setShow, contactId, reload } = props;
   const [contact, setContact] = useState<Contact>({} as Contact);
   const [errors, setErrors] = useState({} as FormErrors);
 
   const handleClose = () => {
-    //setContact(CreateNewUserObj()); //reset the form data
     setContact({} as Contact); //reset the form data
     setErrors({} as FormErrors); //reset the errors
+    reload();
     setShow(false); //close modal
   };
 
   const onSaveClick = async (contactId: number) => {
-    //validate then save / update
     const errors = validateForm(contact);
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
@@ -29,7 +28,6 @@ const EditModal = (props: editModalProps) => {
       ? await updateContact(contact as Contact)
       : await addContact(contact as Contact);
     handleClose();
-    //update the list / refresh event?
   };
 
   useEffect(() => {
@@ -41,6 +39,7 @@ const EditModal = (props: editModalProps) => {
   }, [contactId]);
 
   const title = contactId ? `Edit Contact #${contactId}` : `Add New Contact`;
+  
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
