@@ -1,4 +1,4 @@
-.table-container{
+.table-container {
     display: flex;
     flex-direction: column;
     margin: 15px;
@@ -9,7 +9,7 @@
     display: flex;
 }
 
-.actions-container{
+.actions-container {
     display: flex;
     justify-content: space-evenly;
 }
@@ -17,20 +17,42 @@
 .zero-state {
     margin: 25px;
 }
+
 /* Buttons with font-awesome icons */
-.btn-label {
-	position: relative;
-	left: -12px;
-	display: inline-block;
-	padding: 6px 12px;
+.btn-label-left {
+    position: relative;
+    left: -8px;
+    display: inline-block;
+    padding: 1px 6px;
+}
+
+.btn-label-right {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 7px;
+}
+
+.invert {
+    -webkit-filter: invert(100%);
+    /* safari 6.0 - 9.0 */
+    filter: invert(100%);
+    -webkit-filter: invert(1);
+    /* safari 6.0 - 9.0 */
+    filter: invert(1);
 }
 
 .btn-labeled {
-	padding-top: 0;
-	padding-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-.header{
+.header {
     display: flex;
     gap: 15px;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
 }

@@ -24,7 +24,7 @@ const confirmModal = (props: confirmModalProps) => {
         <Button variant="secondary" onClick={cancel}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={confirmDelete}>
+        <Button variant="danger" onClick={confirmDelete}>
           Delete
         </Button>
       </Modal.Footer>

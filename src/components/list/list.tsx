@@ -8,6 +8,8 @@ import ConfirmModal from "../confirmModal/confirmModal";
 import AddNewContactBtn from "../shared/AddNewContact";
 import { fetchAllContacts } from "../shared/apiService";
 import ZeroState from "./zeroState";
+import pen from "../../media/pen.svg";
+import reload from "../../media/arrow-clockwise.svg";
 import "./list.css";
 
 const List = () => {
@@ -30,8 +32,6 @@ const List = () => {
   }, [data]);
 
   const onEditClick = (contact: Contact) => {
-    console.log(contact);
-    //todo: fetch the user here maybe? to prevent nullable values 
     setSelectedContact(contact);
     setShowEditModal(true);
   };
@@ -42,7 +42,7 @@ const List = () => {
   };
 
   const onAddNew = () => {
-    setSelectedContact({} as Contact)
+    setSelectedContact({} as Contact);
     setShowEditModal(true);
   };
 
@@ -51,11 +51,11 @@ const List = () => {
   };
 
   const CloseEditModal = () => {
-    setSelectedContact({} as Contact)
+    setSelectedContact({} as Contact);
     setShowEditModal(false);
-  }
+  };
 
-  //add loading gif before 
+  //add loading gif before
   if (data.length === 0) {
     return (
       <div>
@@ -68,12 +68,18 @@ const List = () => {
         />
       </div>
     );
-  } else {//export this code to anothe component
+  } else {
+    //export this code to anothe component
     return (
       <div className="table-container">
         <div className="header">
           <AddNewContactBtn action={onAddNew} text="Add New Contact" />
-          <Button onClick={fetchData}>Refresh</Button>
+          <Button onClick={fetchData}>
+            <span className="btn-label-right">
+              <img className="invert" src={reload} />
+              <span>Refresh</span>
+            </span>
+          </Button>
         </div>
         <Table striped bordered hover>
           <thead>
@@ -105,8 +111,8 @@ const List = () => {
                         variant="info"
                         onClick={() => onEditClick(contact)}
                       >
-                        <span className="btn-label">
-                          <i className="fa-solid fa-pencil"></i>
+                        <span className="btn-label-left">
+                          <img src={pen} />
                         </span>
                         Edit
                       </Button>
@@ -114,7 +120,7 @@ const List = () => {
                         variant="danger"
                         onClick={() => onDeleteClick(contact)}
                       >
-                        <span className="btn-label">
+                        <span className="btn-label-left">
                           <i className="fa fa-trash"></i>
                         </span>
                         Delete

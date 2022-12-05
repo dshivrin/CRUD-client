@@ -35,7 +35,6 @@ const EditModal = (props: editModalProps) => {
       const result = await fetchContact(contactId);
       setContact(result.data as Contact);
     };
-    console.log(contactId);
     if (contactId) getContactById(contactId);
   }, [contactId]);
 
