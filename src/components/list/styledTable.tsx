@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 const StyledTable = (props: TableProps) => {
   const { data, onDelete, onEdit } = props;
   return (
-    <Table striped bordered hover>
+    <Table table-responsive striped bordered hover>
       <thead>
         <tr>
           <th>Id</th>

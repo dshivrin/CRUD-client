@@ -11,7 +11,6 @@ import Loading from "../loading/loading";
 import reload from "../../media/arrow-clockwise.svg";
 import "./list.css";
 
-
 const List = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,13 +71,16 @@ const List = () => {
     );
   } else {
     return (
-      <div className="table-container">
+      <div >
         {isLoading ? (
           <Loading />
         ) : (
-          <div>
+          <div className="table-container">
+            <div className="title">
+              <h4>Contacts List</h4>
+            </div>
             <div className="header">
-              <AddNewContactBtn action={onAddNew} text="Add New Contact" />
+              <AddNewContactBtn action={onAddNew} text="Add" />
               <Button onClick={fetchData}>
                 <span className="btn-label-right">
                   <img className="invert" src={reload} />

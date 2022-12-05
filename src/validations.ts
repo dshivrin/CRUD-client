@@ -1,5 +1,8 @@
 import { Contact, FormErrors } from "./types";
-const validPhoneRegex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+
+//validate Israeli phone numbers mobile, stationary 1700 etc
+const validPhoneRegex =
+  /^(0(?:[23489]|5[0-689]|7[2346789])(?![01])(\d{7}))|(1(?:[7-9])00(\d{6}))|(1599(\d{6}))$/; 
 const validEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const validateForm = (contact: Contact) => {
@@ -11,7 +14,8 @@ export const validateForm = (contact: Contact) => {
   }
 
   //email
-  if (contact.email && validateEmail(contact.email)) {//email is not required
+  if (contact.email && validateEmail(contact.email)) {
+    //email is not required
     newErrors.email = [];
     newErrors.email.push("Invalid email address!");
   }
