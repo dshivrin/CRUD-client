@@ -30,6 +30,7 @@ const List = () => {
   }, [data]);
 
   const onEditClick = (contact: Contact) => {
+    console.log(contact);
     //todo: fetch the user here maybe? to prevent nullable values 
     setSelectedContact(contact);
     setShowEditModal(true);
@@ -41,12 +42,18 @@ const List = () => {
   };
 
   const onAddNew = () => {
+    setSelectedContact({} as Contact)
     setShowEditModal(true);
   };
 
   const updateContactState = (contact: Contact) => {
     setSelectedContact(contact);
   };
+
+  const CloseEditModal = () => {
+    setSelectedContact({} as Contact)
+    setShowEditModal(false);
+  }
 
   //add loading gif before 
   if (data.length === 0) {
@@ -55,7 +62,7 @@ const List = () => {
         <ZeroState action={onAddNew} />
         <EditModal
           show={showEditModal}
-          setShow={setShowEditModal}
+          closeModal={CloseEditModal}
           contactId={selectedContact.id}
           reload={fetchData}
         />
@@ -122,7 +129,7 @@ const List = () => {
         {/* Modals */}
         <EditModal
           show={showEditModal}
-          setShow={setShowEditModal}
+          closeModal={CloseEditModal}
           contactId={selectedContact.id}
           reload={fetchData}
         />

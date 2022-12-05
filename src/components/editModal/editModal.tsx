@@ -7,7 +7,7 @@ import { fetchContact, addContact, updateContact } from "../shared/apiService";
 import { validateForm } from "../../validations";
 
 const EditModal = (props: editModalProps) => {
-  const { show, setShow, contactId, reload } = props;
+  const { show, closeModal, contactId, reload } = props;
   const [contact, setContact] = useState<Contact>({} as Contact);
   const [errors, setErrors] = useState({} as FormErrors);
 
@@ -15,7 +15,7 @@ const EditModal = (props: editModalProps) => {
     setContact({} as Contact); //reset the form data
     setErrors({} as FormErrors); //reset the errors
     reload();
-    setShow(false); //close modal
+    closeModal(); //close modal
   };
 
   const onSaveClick = async (contactId: number) => {
@@ -35,6 +35,7 @@ const EditModal = (props: editModalProps) => {
       const result = await fetchContact(contactId);
       setContact(result.data as Contact);
     };
+    console.log(contactId);
     if (contactId) getContactById(contactId);
   }, [contactId]);
 

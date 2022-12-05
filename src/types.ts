@@ -14,7 +14,7 @@ export type Contact = {
 
 export type editModalProps = {
   show: boolean;
-  setShow: (value: boolean) => void;
+  closeModal: () => void;
   contactId: number;
   reload: () => void;
 };

@@ -10,7 +10,6 @@ import {
 //Controlled form
 const ContactForm = (props: FormProps) => {
   const { contact, setContact, errors, setErrors } = props;
-
   const dateValue = FormatDateStringForDatePicker(contact.birthDate);
 
   //socialNumber is type number, the rest are strings
