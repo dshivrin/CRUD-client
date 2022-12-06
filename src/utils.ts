@@ -6,22 +6,27 @@ export const FormatDateString = (str: string) => {
   return date.toLocaleDateString("en-GB");
 };
 
-//returns dd-MM-YYYY because bootstrap date-picker is picky on its format
-export const FormatDateStringForDatePicker = (str: string) => {
-  if(!str) return;
-  const date = new Date(str);
-  let year, month, day;
-  year = date.getFullYear();
-  month =
-    date.getMonth() + 1 > 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
-  day = date.getDay() > 10 ? date.getDay() : `0${date.getDay()+1}`;
-  return `${year}-${month}-${day}`;
+export const formatDate = (str: string) => {
+  var date = new Date(str);
+  
+  // Get year, month, and day part from the date
+  var year = date.toLocaleString("default", { year: "numeric" });
+  var month = date.toLocaleString("default", { month: "2-digit" });
+  var day = date.toLocaleString("default", { day: "2-digit" });
+  //this is a hack, the datepicker keeps reseting the date on typing the year ¯\_(ツ)_/¯
+  if(year.length < 4){
+    return;
+  }
+  // Generate yyyy-mm-dd date string
+  var formattedDate = year + "-" + month + "-" + day ;
+
+  return formattedDate;
 };
 
 export const CreateNewUserObj = () => {
-  const contact : Contact ={
-    id:0,
-    socialNumber:0,
+  const contact: Contact = {
+    id: 0,
+    socialNumber: 0,
     name: "",
     birthDate: "",
     email: "",
@@ -30,5 +35,4 @@ export const CreateNewUserObj = () => {
   };
 
   return contact;
-}
-
+};

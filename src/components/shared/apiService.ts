@@ -8,7 +8,6 @@ const baseUrl = config.apiUrl;
 export const fetchAllContacts = async (currentPage: number, recordsPerPage: number) => {
   const skip = (currentPage -1) * recordsPerPage;
   const url = `${baseUrl}/${skip}/${recordsPerPage}`;
-  console.log("skip ", skip)
   try {
     return await axios.get(url);
   } catch (err) {

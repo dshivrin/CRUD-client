@@ -1,5 +1,5 @@
 import Form from "react-bootstrap/Form";
-import { FormatDateStringForDatePicker } from "../../utils";
+import { formatDate } from "../../utils";
 import {
   FormErrors,
   FormProps,
@@ -10,7 +10,6 @@ import {
 //Controlled form
 const ContactForm = (props: FormProps) => {
   const { contact, setContact, errors, setErrors } = props;
-  const dateValue = FormatDateStringForDatePicker(contact.birthDate);
 
   //socialNumber is type number, the rest are strings
   const setField = (field: string, value: string | number) => {
@@ -18,7 +17,6 @@ const ContactForm = (props: FormProps) => {
       ...contact,
       [field]: value,
     });
-
     //remove the errors for that field
     if (!!errors[field as keyof FormErrors]) {
       setErrors({
@@ -36,7 +34,7 @@ const ContactForm = (props: FormProps) => {
           type="number"
           autoFocus
           value={contact.socialNumber}
-          isInvalid={ !!errors.socialNumber }
+          isInvalid={!!errors.socialNumber}
           onChange={(event: InputChangeEvent) => {
             setField("socialNumber", +event.target.value);
           }}
@@ -50,7 +48,7 @@ const ContactForm = (props: FormProps) => {
         <Form.Control
           type="string"
           value={contact.name}
-          isInvalid={ !!errors.name }
+          isInvalid={!!errors.name}
           onChange={(event: InputChangeEvent) => {
             setField("name", event.target.value);
           }}
@@ -65,7 +63,7 @@ const ContactForm = (props: FormProps) => {
           type="email"
           placeholder="name@example.com"
           value={contact.email}
-          isInvalid={ !!errors.email }
+          isInvalid={!!errors.email}
           onChange={(event: InputChangeEvent) => {
             setField("email", event.target.value);
           }}
@@ -78,9 +76,9 @@ const ContactForm = (props: FormProps) => {
         <Form.Label>Date of Birth</Form.Label>
         <Form.Control
           type="date"
-          name="BirthDate"
-          isInvalid={ !!errors.birthDate }
-          value={dateValue}
+          name="birthDate"
+          isInvalid={!!errors.birthDate}
+          value={formatDate(contact.birthDate)}
           onChange={(event: InputChangeEvent) => {
             setField("birthDate", event.target.value);
           }}
@@ -94,7 +92,7 @@ const ContactForm = (props: FormProps) => {
         <Form.Select
           aria-label="Gender"
           value={contact.gender}
-          isInvalid={ !!errors.gender }
+          isInvalid={!!errors.gender}
           onChange={(event: SelectChangeEvent) => {
             setField("gender", event.target.value);
           }}
@@ -113,7 +111,7 @@ const ContactForm = (props: FormProps) => {
         <Form.Control
           type="string"
           value={contact.phone}
-          isInvalid={ !!errors.phone }
+          isInvalid={!!errors.phone}
           onChange={(event: InputChangeEvent) => {
             setField("phone", event.target.value);
           }}
