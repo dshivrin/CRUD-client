@@ -2,6 +2,8 @@ This is a basic React app with CRUD actions.
 
 Using typescript and react-bootstrap.
 
+The API for this app is written in .NET 7 and can be found here https://github.com/dshivrin/ContactsAPI/tree/master
+
 
 # Getting Started with Create React App
 
