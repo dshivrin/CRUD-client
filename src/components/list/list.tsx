@@ -6,37 +6,50 @@ import ConfirmModal from "../confirmModal/confirmModal";
 import AddNewContactBtn from "../shared/AddNewContact";
 import { fetchAllContacts } from "../shared/apiService";
 import StyledTable from "./styledTable";
+import Pagination from "./pagination";
 import ZeroState from "./zeroState";
 import Loading from "../loading/loading";
-import reload from "../../media/arrow-clockwise.svg";
+import reloadIcon from "../../media/arrow-clockwise.svg";
 import "./list.css";
 
 const List = () => {
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedContact, setSelectedContact] = useState({} as Contact);
 
-  const fetchData = async () => {
-    const result = await fetchAllContacts();
-    setData(result.data);
+  //paginations calcs
+  const nPages = Math.ceil(totalRecords / recordsPerPage);
+
+  const fetchData = async (page: number, records: number) => {
+    const result = await fetchAllContacts(page, records);
+    setData(result.data.contacts);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchInitialData = async () => {
       setIsLoading(true);
-      const result = await fetchAllContacts();
-      setData(result.data);
+      const result = await fetchAllContacts(currentPage, recordsPerPage);
+      setData(result.data.contacts);
+      setTotalRecords(result.data.total);
       setIsLoading(false);
     };
-    fetchData();
-  }, []);
+    fetchInitialData();
+  }, [currentPage]);
 
   const onEditClick = (contact: Contact) => {
     setSelectedContact(contact);
     setShowEditModal(true);
   };
+
+  const onPageClick = (page: number) => {
+    setCurrentPage(page);
+    fetchData(page, recordsPerPage);
+  }
 
   const onDeleteClick = (contact: Contact) => {
     setSelectedContact(contact);
@@ -65,13 +78,13 @@ const List = () => {
           show={showEditModal}
           closeModal={CloseEditModal}
           contactId={selectedContact.id}
-          reload={fetchData}
+          reload={() => fetchData(currentPage, recordsPerPage)}
         />
       </div>
     );
   } else {
     return (
-      <div >
+      <div>
         {isLoading ? (
           <Loading />
         ) : (
@@ -81,23 +94,30 @@ const List = () => {
             </div>
             <div className="header">
               <AddNewContactBtn action={onAddNew} text="Add" />
-              <Button onClick={fetchData}>
+              <Button onClick={() => fetchData(currentPage, recordsPerPage)}>
                 <span className="btn-label-right">
-                  <img className="invert" src={reload} />
+                  <img className="invert" src={reloadIcon} />
                   <span>Refresh</span>
                 </span>
               </Button>
             </div>
-            <StyledTable
-              data={data}
-              onDelete={onDeleteClick}
-              onEdit={onEditClick}
-            />
+            <div className="table">
+              <StyledTable
+                data={data}
+                onDelete={onDeleteClick}
+                onEdit={onEditClick}
+              />
+              <Pagination
+                nPages={nPages}
+                currentPage={currentPage}
+                setCurrentPage={onPageClick}
+              />
+            </div>
             <EditModal
               show={showEditModal}
               closeModal={CloseEditModal}
               contactId={selectedContact.id}
-              reload={fetchData}
+              reload={() => fetchData(currentPage, recordsPerPage)}
             />
             <ConfirmModal
               show={showDeleteModal}

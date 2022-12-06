@@ -18,6 +18,12 @@ export type TableProps = {
   onEdit: (contact: Contact) => void;
 };
 
+export type PaginationProps = {
+  nPages: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+}
+
 export type editModalProps = {
   show: boolean;
   closeModal: () => void;

@@ -5,10 +5,19 @@ import axios from "axios";
 
 const baseUrl = config.apiUrl;
 
-export const fetchAllContacts = async () => {
+export const fetchAllContacts = async (currentPage: number, recordsPerPage: number) => {
+  const skip = (currentPage -1) * recordsPerPage;
+  const url = `${baseUrl}/${skip}/${recordsPerPage}`;
+  console.log("skip ", skip)
   try {
-  } catch (err) {}
-  return await axios.get(baseUrl);
+    return await axios.get(url);
+  } catch (err) {
+    console.error(err);
+    toast.error(`Failed to fetch contacts`, {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
+  }
+  return {data: {contacts:[], total: 0}};
 };
 
 export const fetchContact = async (contactId: number) => {
@@ -19,9 +28,9 @@ export const fetchContact = async (contactId: number) => {
       return result;
     }
   } catch (err) {
-    console.error("failed to fetch contacts");
+    console.error(`failed to fetch contact ${contactId}`);
   }
-  return { data: [] };
+  return { data: [], total: 0 };
 };
 
 export const addContact = async (contact: Contact) => {
